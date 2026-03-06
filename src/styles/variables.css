@@ -38,7 +38,7 @@
   
   /* 过渡 */
   --transition: all 0.3s ease;
-
+  
   /* 语义化令牌（逐步用于统一设计系统） */
   --surface-1: var(--bg-white);
   --surface-2: var(--bg-light);

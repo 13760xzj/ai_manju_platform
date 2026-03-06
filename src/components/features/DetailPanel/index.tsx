@@ -32,21 +32,21 @@ export function DetailPanel({ item, isOpen, onClose, categories }: DetailPanelPr
       <div className="detail-overlay" onClick={onClose} />
 
       <div className={`detail-panel ${isOpen ? 'show' : ''}`} role="dialog" aria-modal="true" aria-label="详情">
-        <div className="detail-header">
+      <div className="detail-header">
           <div className="detail-header-title">
-            <h3>详情</h3>
+        <h3>详情</h3>
             <div className="detail-header-subtitle" title={item.name}>{item.name}</div>
           </div>
           <button className="close-btn" onClick={onClose} aria-label="关闭">×</button>
-        </div>
+      </div>
 
-        <div className="detail-content">
-          <div className="detail-preview">
-            <img
-              src={'preview' in item ? item.preview : item.cover}
-              alt={item.name}
+      <div className="detail-content">
+        <div className="detail-preview">
+          <img 
+            src={'preview' in item ? item.preview : item.cover} 
+            alt={item.name} 
               loading="lazy"
-            />
+          />
           </div>
 
           <div className="detail-info">
@@ -60,16 +60,16 @@ export function DetailPanel({ item, isOpen, onClose, categories }: DetailPanelPr
                 <div className="detail-field">
                   <div className="detail-label">分类</div>
                   <div className="detail-value">{categoryName}</div>
-                </div>
-              )}
+            </div>
+          )}
 
-              {isWork && (
+          {isWork && (
                 <div className="detail-field">
                   <div className="detail-label">状态</div>
                   <div className="detail-value">
-                    <span className={`status-badge status-${(item as Work).status}`}>
-                      {getStatusLabel((item as Work).status)}
-                    </span>
+              <span className={`status-badge status-${(item as Work).status}`}>
+                {getStatusLabel((item as Work).status)}
+              </span>
                   </div>
                 </div>
               )}
@@ -88,16 +88,16 @@ export function DetailPanel({ item, isOpen, onClose, categories }: DetailPanelPr
                     <span key={`${tag}_${idx}`} className="tag">{tag}</span>
                   ))}
                 </div>
-              </div>
-            )}
+            </div>
+          )}
           </div>
         </div>
 
         <div className="detail-actions">
           <Button variant="primary">使用</Button>
           <div className="detail-actions-row">
-            <Button variant="secondary">编辑</Button>
-            <Button variant="secondary">下载</Button>
+          <Button variant="secondary">编辑</Button>
+          <Button variant="secondary">下载</Button>
           </div>
           <Button variant="danger">删除</Button>
         </div>

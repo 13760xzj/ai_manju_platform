@@ -283,81 +283,81 @@ export function VideoPreviewPage() {
                 <div className="timeline-content" style={{ width: `${timelineWidth}px` }}>
                   <div className="time-ruler" id="time-ruler" ref={timeRulerRef} />
                   <div className="timeline-playhead" style={{ left: `${playheadLeft}px` }} />
-
-                  <div className="tracks-area">
-                    <div className="track track-video">
-                      {[ 
-                        { width: 200, label: '分镜 1' },
-                        { width: 180, label: '分镜 2' },
-                        { width: 220, label: '分镜 3' },
-                        { width: 190, label: '分镜 4' },
-                        { width: 210, label: '分镜 5' },
-                        { width: 170, label: '分镜 6' }
-                      ].map((clip, i) => (
-                        <div key={i} className="video-clip" style={{ width: clip.width + 'px' }}>
-                          <div className="clip-handle clip-handle-left"></div>
-                          <div className="video-clip-label">{clip.label}</div>
-                          <div className="clip-handle clip-handle-right"></div>
-                        </div>
-                      ))}
+              
+              <div className="tracks-area">
+                <div className="track track-video">
+                  {[ 
+                    { width: 200, label: '分镜 1' },
+                    { width: 180, label: '分镜 2' },
+                    { width: 220, label: '分镜 3' },
+                    { width: 190, label: '分镜 4' },
+                    { width: 210, label: '分镜 5' },
+                    { width: 170, label: '分镜 6' }
+                  ].map((clip, i) => (
+                    <div key={i} className="video-clip" style={{ width: clip.width + 'px' }}>
+                      <div className="clip-handle clip-handle-left"></div>
+                      <div className="video-clip-label">{clip.label}</div>
+                      <div className="clip-handle clip-handle-right"></div>
                     </div>
-                    
-                    <div className="track track-dubbing">
-                      {[
-                        { width: 200, hasAudio: false, text: '无配音' },
-                        { width: 180, hasAudio: true, text: 'dubbing_2.mp3' },
-                        { width: 220, hasAudio: true, text: 'dialogue_3.wav' },
-                        { width: 190, hasAudio: false, text: '无配音' },
-                        { width: 210, hasAudio: true, text: 'voiceover_5.mp3' },
-                        { width: 170, hasAudio: false, text: '无配音' }
-                      ].map((clip, i) => (
-                        <div 
-                          key={i} 
-                          className={`dubbing-clip ${!clip.hasAudio ? 'no-audio' : ''}`} 
-                          style={{ width: clip.width + 'px' }}
-                          onClick={() => handleUploadDubbing(i + 1)}
-                        >
-                          <span className="dubbing-upload-icon">{clip.hasAudio ? '✅' : '📤'}</span>
-                          <span className="dubbing-clip-text">{clip.text}</span>
-                        </div>
-                      ))}
+                  ))}
+                </div>
+                
+                <div className="track track-dubbing">
+                  {[
+                    { width: 200, hasAudio: false, text: '无配音' },
+                    { width: 180, hasAudio: true, text: 'dubbing_2.mp3' },
+                    { width: 220, hasAudio: true, text: 'dialogue_3.wav' },
+                    { width: 190, hasAudio: false, text: '无配音' },
+                    { width: 210, hasAudio: true, text: 'voiceover_5.mp3' },
+                    { width: 170, hasAudio: false, text: '无配音' }
+                  ].map((clip, i) => (
+                    <div 
+                      key={i} 
+                      className={`dubbing-clip ${!clip.hasAudio ? 'no-audio' : ''}`} 
+                      style={{ width: clip.width + 'px' }}
+                      onClick={() => handleUploadDubbing(i + 1)}
+                    >
+                      <span className="dubbing-upload-icon">{clip.hasAudio ? '✅' : '📤'}</span>
+                      <span className="dubbing-clip-text">{clip.text}</span>
                     </div>
-                    
-                    <div className="track track-subtitle">
-                      {[
-                        { width: 200, text: '这是第一幕字幕...' },
-                        { width: 180, text: '第二幕开始...' },
-                        { width: 220, text: '主角登场，故事展开...' },
-                        { width: 190, text: '冲突升级...' },
-                        { width: 210, text: '高潮迭起，情感爆发...' },
-                        { width: 170, text: '故事结束，谢幕...' }
-                      ].map((clip, i) => (
-                        <div 
-                          key={i} 
-                          className="subtitle-clip" 
-                          style={{ width: clip.width + 'px' }}
-                          onClick={() => handleEditSubtitle(i + 1)}
-                        >
-                          <div className="clip-handle clip-handle-left"></div>
-                          <span className="subtitle-clip-text">{clip.text}</span>
-                          <div className="clip-handle clip-handle-right"></div>
-                        </div>
-                      ))}
+                  ))}
+                </div>
+                
+                <div className="track track-subtitle">
+                  {[
+                    { width: 200, text: '这是第一幕字幕...' },
+                    { width: 180, text: '第二幕开始...' },
+                    { width: 220, text: '主角登场，故事展开...' },
+                    { width: 190, text: '冲突升级...' },
+                    { width: 210, text: '高潮迭起，情感爆发...' },
+                    { width: 170, text: '故事结束，谢幕...' }
+                  ].map((clip, i) => (
+                    <div 
+                      key={i} 
+                      className="subtitle-clip" 
+                      style={{ width: clip.width + 'px' }}
+                      onClick={() => handleEditSubtitle(i + 1)}
+                    >
+                      <div className="clip-handle clip-handle-left"></div>
+                      <span className="subtitle-clip-text">{clip.text}</span>
+                      <div className="clip-handle clip-handle-right"></div>
                     </div>
-                    
-                    <div className="track track-music">
+                  ))}
+                </div>
+                
+                <div className="track track-music">
                       <div className="music-clip" style={{ width: `${timelineWidth}px` }} onClick={handleReplaceMusic}>
-                        <div className="clip-handle clip-handle-left"></div>
-                        <div className="music-waveform">
-                          {[30, 50, 70, 45, 65, 55, 80, 40, 60, 75, 50, 65, 45, 70, 55, 60, 40, 65, 50, 75].map((h, i) => (
-                            <div key={i} className="wave-bar" style={{ height: h + '%' }}></div>
-                          ))}
-                        </div>
-                        <span className="music-clip-text">
-                          <span className="music-clip-icon">🎵</span>
-                          <span>背景音乐 - epic_theme.mp3</span>
-                        </span>
-                        <div className="clip-handle clip-handle-right"></div>
+                    <div className="clip-handle clip-handle-left"></div>
+                    <div className="music-waveform">
+                      {[30, 50, 70, 45, 65, 55, 80, 40, 60, 75, 50, 65, 45, 70, 55, 60, 40, 65, 50, 75].map((h, i) => (
+                        <div key={i} className="wave-bar" style={{ height: h + '%' }}></div>
+                      ))}
+                    </div>
+                    <span className="music-clip-text">
+                      <span className="music-clip-icon">🎵</span>
+                      <span>背景音乐 - epic_theme.mp3</span>
+                    </span>
+                    <div className="clip-handle clip-handle-right"></div>
                       </div>
                     </div>
                   </div>

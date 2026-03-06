@@ -34,7 +34,13 @@ export function CreateWorkPage() {
 
     dispatch(clearCreationData());
     dispatch(createProject({ name: trimmed, description: '' }));
-    navigate('/global-settings');
+    
+    // 在新标签页中打开全局设定页面
+    const url = window.location.origin + '/global-settings';
+    window.open(url, '_blank');
+    
+    // 关闭当前模态框
+    navigate(-1);
   };
 
   return (
