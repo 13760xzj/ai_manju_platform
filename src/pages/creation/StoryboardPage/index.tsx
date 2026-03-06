@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/useToast';
-import { ConfirmDialog } from '@/components/common';
+import { Button, ConfirmDialog } from '@/components/common';
 import './index.css';
 
 export function StoryboardPage() {
@@ -10,6 +10,7 @@ export function StoryboardPage() {
   const [viewMode, setViewMode] = useState<'list' | 'card'>('list');
   const [progressCount] = useState(0);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [activeCardMenu, setActiveCardMenu] = useState<number | null>(null);
 
   const handleNext = () => {
     navigate('/storyboard-video');
@@ -27,31 +28,73 @@ export function StoryboardPage() {
     toast.info('添加新分镜功能');
   };
 
+  const toggleCardMenu = (index: number) => {
+    setActiveCardMenu(activeCardMenu === index ? null : index);
+  };
+
+  const handleEditImage = () => {
+    toast.info('编辑分镜图片');
+    setActiveCardMenu(null);
+  };
+
+  const handleCopyCard = () => {
+    toast.info('复制分镜');
+    setActiveCardMenu(null);
+  };
+
+  const handlePreview = () => {
+    toast.info('预览');
+    setActiveCardMenu(null);
+  };
+
+  const handleReplace = () => {
+    toast.info('替换');
+    setActiveCardMenu(null);
+  };
+
+  const handleDownload = () => {
+    toast.info('下载');
+    setActiveCardMenu(null);
+  };
+
+  const handleDeleteCard = () => {
+    toast.info('删除分镜');
+    setActiveCardMenu(null);
+  };
+
   return (
-    <div className="settings-page">
+    <div className="storyboard-page">
       <div className="page-toolbar">
-        <div className="toolbar-left">
-          <div className="toggle-group">
-            <button 
-              className={`toggle-btn ${viewMode === 'list' ? 'active' : ''}`}
-              onClick={() => setViewMode('list')}
-            >
-              列表
-            </button>
-            <button 
-              className={`toggle-btn ${viewMode === 'card' ? 'active' : ''}`}
-              onClick={() => setViewMode('card')}
-            >
-              卡片
-            </button>
+        <div className="navigation-box ui-toolbar">
+          <div className="nav-left">
+            <div className="toggle-group">
+              <Button
+                variant={viewMode === 'list' ? 'primary' : 'secondary'}
+                size="small"
+                className="toggle-btn"
+                onClick={() => setViewMode('list')}
+              >
+                列表
+              </Button>
+              <Button
+                variant={viewMode === 'card' ? 'primary' : 'secondary'}
+                size="small"
+                className="toggle-btn"
+                onClick={() => setViewMode('card')}
+              >
+                卡片
+              </Button>
+            </div>
+            <div className="nav-divider"></div>
+            <div className="progress-info">
+              分镜完成进度：<span>{progressCount}</span>/16
+            </div>
           </div>
-          <div className="progress-info">
-            视频完成进度：<span>{progressCount}</span>/16
+          <div className="nav-right">
+            <Button variant="secondary" size="small" onClick={handleAddStoryboard}>添加分镜</Button>
+            <Button variant="secondary" size="small" onClick={handleRegenerate}>重新生成分镜</Button>
+            <Button variant="primary" size="small" onClick={handleNext}>下一步</Button>
           </div>
-        </div>
-        <div className="toolbar-right">
-          <button className="btn-small btn-secondary" onClick={handleRegenerate}>重新生成分镜</button>
-          <button className="btn-small btn-primary-small" onClick={handleNext}>下一步</button>
         </div>
       </div>
 
@@ -122,24 +165,55 @@ export function StoryboardPage() {
         <div className="card-view-container active">
           <div className="card-grid">
             {[
-              { title: '分镜 1-1', scene: '古代寺庙' },
-              { title: '分镜 1-2', scene: '暴风雨天空' },
-              { title: '分镜 1-3', scene: '古代寺庙内' }
+              { title: '分镜 1-1' },
+              { title: '分镜 1-2' },
+              { title: '分镜 1-3' }
             ].map((card, index) => (
               <div key={index} className="storyboard-card-compact">
                 <div className="card-header">
                   <div className="card-title">{card.title}</div>
-                  <button className="card-menu-btn">⋮</button>
+                  <div className="card-menu-wrapper">
+                    <button 
+                      className="card-menu-btn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleCardMenu(index);
+                      }}
+                    >
+                      ...
+                    </button>
+                    {activeCardMenu === index && (
+                      <div className="card-menu-dropdown">
+                        <div className="menu-item" onClick={handleEditImage}>
+                          <span className="menu-icon">✏️</span>
+                          <span>编辑分镜图</span>
+                        </div>
+                        <div className="menu-item" onClick={handleCopyCard}>
+                          <span className="menu-icon">📋</span>
+                          <span>复制分镜</span>
+                        </div>
+                        <div className="menu-item" onClick={handlePreview}>
+                          <span className="menu-icon">🔍</span>
+                          <span>预览</span>
+                        </div>
+                        <div className="menu-item" onClick={handleReplace}>
+                          <span className="menu-icon">🔄</span>
+                          <span>替换</span>
+                        </div>
+                        <div className="menu-item" onClick={handleDownload}>
+                          <span className="menu-icon">⬇️</span>
+                          <span>下载</span>
+                        </div>
+                        <div className="menu-item delete" onClick={handleDeleteCard}>
+                          <span className="menu-icon">🗑️</span>
+                          <span>删除分镜</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
                 <div className="card-image-container">
                   <span>暂无图片</span>
-                </div>
-                <div className="card-footer">
-                  <div className="card-info">场景：{card.scene}</div>
-                  <div className="card-actions">
-                    <button className="card-action-btn primary">编辑</button>
-                    <button className="card-action-btn">操作 ▼</button>
-                  </div>
                 </div>
               </div>
             ))}
@@ -154,9 +228,6 @@ export function StoryboardPage() {
               </div>
               <div className="card-image-container" style={{ border: 'none', background: 'transparent' }}>
                 <span style={{ fontSize: '24px', color: '#666' }}>+</span>
-              </div>
-              <div className="card-footer">
-                <div className="card-info">点击添加新分镜</div>
               </div>
             </div>
           </div>

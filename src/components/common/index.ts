@@ -6,3 +6,4 @@ export { Loading } from './Loading';
 export { PageLoading } from './Loading/PageLoading';
 export { ErrorBoundary } from './ErrorBoundary';
 export { ConfirmDialog } from './ConfirmDialog';
+export { CountBadge, Tag, EmptyState, Skeleton } from './StatusComponents';

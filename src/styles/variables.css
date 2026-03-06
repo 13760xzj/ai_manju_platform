@@ -38,6 +38,14 @@
   
   /* 过渡 */
   --transition: all 0.3s ease;
+
+  /* 语义化令牌（逐步用于统一设计系统） */
+  --surface-1: var(--bg-white);
+  --surface-2: var(--bg-light);
+  --text-strong: var(--text-color);
+  --text-weak: var(--text-secondary);
+  --text-faint: var(--text-muted);
+  --focus-ring: 0 0 0 3px rgba(74, 108, 247, 0.25);
   
   /* 间距 */
   --spacing-xs: 4px;

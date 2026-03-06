@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/useToast';
-import { ConfirmDialog } from '@/components/common';
+import { Button, ConfirmDialog } from '@/components/common';
 import './index.css';
 
 export function StoryboardVideoPage() {
@@ -33,30 +33,34 @@ export function StoryboardVideoPage() {
   };
 
   return (
-    <div className="settings-page" onClick={closeDropdown}>
-      <div className="page-toolbar">
+    <div className="storyboard-video-page" onClick={closeDropdown}>
+      <div className="page-toolbar ui-toolbar">
         <div className="toolbar-left">
           <div className="toggle-group">
-            <button 
-              className={`toggle-btn ${viewMode === 'list' ? 'active' : ''}`}
+            <Button
+              variant={viewMode === 'list' ? 'primary' : 'secondary'}
+              size="small"
+              className="toggle-btn"
               onClick={(e) => { e.stopPropagation(); setViewMode('list'); }}
             >
               列表
-            </button>
-            <button 
-              className={`toggle-btn ${viewMode === 'card' ? 'active' : ''}`}
+            </Button>
+            <Button
+              variant={viewMode === 'card' ? 'primary' : 'secondary'}
+              size="small"
+              className="toggle-btn"
               onClick={(e) => { e.stopPropagation(); setViewMode('card'); }}
             >
               卡片
-            </button>
+            </Button>
           </div>
           <div className="progress-info">
             视频完成进度：<span>{progressCount}</span>/16
           </div>
         </div>
         <div className="toolbar-right">
-          <button className="btn-small btn-secondary" onClick={handleRegenerate}>重新生成分镜</button>
-          <button className="btn-small btn-primary-small" onClick={handleNext}>下一步</button>
+          <Button variant="secondary" size="small" onClick={handleRegenerate}>重新生成分镜</Button>
+          <Button variant="primary" size="small" onClick={handleNext}>下一步</Button>
         </div>
       </div>
 

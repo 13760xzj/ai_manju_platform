@@ -20,7 +20,7 @@ export function GlobalSettingsPage() {
   };
 
   return (
-    <div className="settings-page">
+    <div className="global-settings-page">
 
 
         <div className="setting-card">

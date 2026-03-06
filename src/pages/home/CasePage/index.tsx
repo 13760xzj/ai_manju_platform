@@ -1,27 +1,45 @@
 import { Button } from '@/components/common';
+import { useNavigate } from 'react-router-dom';
 import './index.css';
 
 export function CasePage() {
+  const navigate = useNavigate();
   return (
     <div className="case-page">
       <div className="hero-section">
-        <h2>三倍速出片，电影级质感</h2>
-        <Button variant="primary" size="large" className="create-btn" onClick={() => window.open('/global-settings', '_blank')}>
-          我要创作 →
-        </Button>
-        <div className="hero-image">
-          <div className="all-in-one">ALL-IN-ONE</div>
+        <div className="hero-content">
+          <h2>三倍速出片，电影级质感</h2>
+          <Button
+            variant="primary"
+            size="large"
+            className="create-btn"
+            onClick={() => navigate('/create-work', { state: { backgroundPath: '/case' } })}
+          >
+            我要创作 →
+          </Button>
+        </div>
+        <div className="hero-banner">
+          <div className="banner-card card-1">
+            <div className="card-content">AI 生成</div>
+          </div>
+          <div className="banner-card card-2">
+            <div className="card-content">智能剪辑</div>
+          </div>
+          <div className="banner-card card-3">
+            <div className="card-content">一键成片</div>
+          </div>
         </div>
       </div>
+
       <div className="user-works">
         <h3>用户作品</h3>
-        <div className="works-grid">
-          {[1, 2, 3, 4, 5].map((item) => (
-            <div key={item} className="work-card">
-              <div className="work-thumbnail">
+        <div className="card-rail">
+          {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
+            <div key={item} className="rail-card">
+              <div className="rail-thumbnail">
                 <div className="play-btn">▶</div>
               </div>
-              <div className="work-title">作品{item}</div>
+              <div className="rail-title">作品{item}</div>
             </div>
           ))}
         </div>

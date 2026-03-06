@@ -1,4 +1,5 @@
 export { GlobalSettingsPage } from './GlobalSettingsPage';
+export { CreateWorkPage } from './CreateWorkPage';
 export { StoryPlotPage } from './StoryPlotPage';
 export { SceneCharacterPropsPage } from './SceneCharacterPropsPage';
 export { StoryboardPage } from './StoryboardPage';

@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/useToast';
 import './index.css';
 
 export function WorksPage() {
   const toast = useToast();
+  const navigate = useNavigate();
   const [activeDropdown, setActiveDropdown] = useState<number | null>(null);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [workTitles, setWorkTitles] = useState<{ [key: number]: string }>({
@@ -49,14 +51,44 @@ export function WorksPage() {
         <h2>我的作品</h2>
       </div>
       <div className="works-grid">
-        <div className="create-card" onClick={() => window.open('/global-settings', '_blank')} style={{ cursor: 'pointer' }}>
-          <div className="create-btn-large">+</div>
+        <div
+          className="create-card"
+          onClick={() => navigate('/create-work', { state: { backgroundPath: '/case' } })}
+          style={{ cursor: 'pointer' }}
+        >
+          <div className="create-thumbnail">
+            <div className="create-btn-large">+</div>
+          </div>
           <div className="create-text">创建新视频</div>
         </div>
         {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
           <div key={item} className="work-card">
             <div className="work-thumbnail">
               <div className="work-preview"></div>
+              <div className="work-menu">
+                <button 
+                  className="work-menu-btn"
+                  onClick={(e) => { e.stopPropagation(); toggleDropdown(item); }}
+                >
+                  ⋮
+                </button>
+                {activeDropdown === item && (
+                  <div className="work-dropdown">
+                    <button 
+                      className="work-dropdown-item"
+                      onClick={(e) => { e.stopPropagation(); handleRename(item); }}
+                    >
+                      ✏️ 重命名
+                    </button>
+                    <button 
+                      className="work-dropdown-item danger"
+                      onClick={(e) => { e.stopPropagation(); handleDelete(item); }}
+                    >
+                      🗑️ 删除
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
             <div className="work-info">
               {editingId === item ? (
@@ -71,32 +103,13 @@ export function WorksPage() {
                   onClick={(e) => e.stopPropagation()}
                 />
               ) : (
-                <div className="work-title">{workTitles[item]}</div>
-              )}
-              <div className="work-date">2024-02-28 15:30</div>
-            </div>
-            <div className="work-menu">
-              <button 
-                className="work-menu-btn"
-                onClick={(e) => { e.stopPropagation(); toggleDropdown(item); }}
-              >
-                ⋮
-              </button>
-              {activeDropdown === item && (
-                <div className="work-dropdown">
-                  <button 
-                    className="work-dropdown-item"
-                    onClick={(e) => { e.stopPropagation(); handleRename(item); }}
-                  >
-                    ✏️ 重命名
-                  </button>
-                  <button 
-                    className="work-dropdown-item danger"
-                    onClick={(e) => { e.stopPropagation(); handleDelete(item); }}
-                  >
-                    🗑️ 删除
-                  </button>
-                </div>
+                <>
+                  <div className="work-title" title={workTitles[item]}>{workTitles[item]}</div>
+                  <div className="work-meta">
+                    <span className="work-status">已完成</span>
+                    <span className="work-date">2024-02-28 15:30</span>
+                  </div>
+                </>
               )}
             </div>
           </div>

@@ -202,6 +202,8 @@ export function Header({
           >
             个人资产库
           </button>
+        </div>
+        <div className="header-right">
           {isLoggedIn ? (
             <Button
               variant="danger"

@@ -11,6 +11,7 @@ const WorksPage = lazy(() => import('@/pages/home/WorksPage').then(m => ({ defau
 const PersonalAssetsPage = lazy(() => import('@/pages/home/PersonalAssetsPage').then(m => ({ default: m.PersonalAssetsPage })));
 const ProjectsPage = lazy(() => import('@/pages/user/ProjectsPage').then(m => ({ default: m.ProjectsPage })));
 const NotFoundPage = lazy(() => import('@/pages/user/NotFoundPage').then(m => ({ default: m.NotFoundPage })));
+const CreateWorkPage = lazy(() => import('@/pages/creation/CreateWorkPage').then(m => ({ default: m.CreateWorkPage })));
 const GlobalSettingsPage = lazy(() => import('@/pages/creation/GlobalSettingsPage').then(m => ({ default: m.GlobalSettingsPage })));
 const StoryPlotPage = lazy(() => import('@/pages/creation/StoryPlotPage').then(m => ({ default: m.StoryPlotPage })));
 const SceneCharacterPropsPage = lazy(() => import('@/pages/creation/SceneCharacterPropsPage').then(m => ({ default: m.SceneCharacterPropsPage })));
@@ -52,12 +53,22 @@ function AppContent() {
   const location = useLocation();
   const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector((state: RootState) => state.auth.isLoggedIn);
+
+  const state = location.state as { backgroundPath?: string } | null;
+  const backgroundPath =
+    state?.backgroundPath ?? (location.pathname === '/create-work' ? '/case' : undefined);
+  const backgroundLocation = backgroundPath
+    ? { ...location, pathname: backgroundPath, state: null, key: `${location.key}_bg` }
+    : null;
+
+  const layoutPath = backgroundLocation?.pathname ?? location.pathname;
   
   const getActiveStep = () => {
-    return PATH_TO_STEP[location.pathname] ?? 0;
+    return PATH_TO_STEP[layoutPath] ?? 0;
   };
   
-  const shouldShowHeader = SHOW_HEADER_PATHS.includes(location.pathname);
+  const shouldShowHeader = SHOW_HEADER_PATHS.includes(layoutPath);
+  const shouldShowSidebar = Object.prototype.hasOwnProperty.call(PATH_TO_STEP, layoutPath);
 
   const handleLogin = () => {
     dispatch(loginAction({ userId: Date.now(), username: '用户' }));
@@ -77,9 +88,9 @@ function AppContent() {
         />
       )}
       
-      <MainLayout activeStep={getActiveStep()}>
+      <MainLayout activeStep={getActiveStep()} showSidebar={shouldShowSidebar}>
         <Suspense fallback={<PageLoader />}>
-          <Routes>
+          <Routes location={backgroundLocation ?? location}>
             <Route path="/" element={<Navigate to="/case" replace />} />
             <Route path="/case" element={<CasePage />} />
             <Route path="/works" element={<WorksPage />} />
@@ -94,6 +105,12 @@ function AppContent() {
             <Route path="/video-preview" element={<VideoPreviewPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
+
+          {location.pathname === '/create-work' && (
+            <Routes>
+              <Route path="/create-work" element={<CreateWorkPage />} />
+            </Routes>
+          )}
         </Suspense>
       </MainLayout>
       

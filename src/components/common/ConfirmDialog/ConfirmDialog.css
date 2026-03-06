@@ -11,7 +11,7 @@
 
 .confirm-dialog-message {
   font-size: 15px;
-  color: #333;
+  color: var(--text-strong);
   line-height: 1.6;
   margin: 0;
 }
@@ -22,13 +22,13 @@
 }
 
 .confirm-dialog-danger .confirm-dialog-icon {
-  color: #ff4d4f;
+  color: var(--danger-color);
 }
 
 .confirm-dialog-warning .confirm-dialog-icon {
-  color: #faad14;
+  color: var(--warning-color);
 }
 
 .confirm-dialog-info .confirm-dialog-icon {
-  color: #1890ff;
+  color: var(--info-color);
 }
